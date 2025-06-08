@@ -29,13 +29,34 @@
             "command": "bash",
             "args": [
                 "${workspaceFolder}/tools/generate_md.sh",
-                "${fileBasenameNoExtension}"
+                "${file}"
             ],
             "problemMatcher": [],
             "group": {
                 "kind": "build",
                 "isDefault": false
             }
+        },
+        {
+            "label": "Generate C++ file for boj",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "${workspaceFolder}/tools/generate_cpp.sh",
+                "${input:filename}"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "filename",
+            "type": "promptString",
+            "description": "📄 생성할 파일 이름 입력 (예: 20040)"
         }
     ],
     "version": "2.0.0"

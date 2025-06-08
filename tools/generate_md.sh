@@ -1,9 +1,17 @@
 #!/bin/bash
 
-FILENAME=$1
+FILEPATH=$1
+FILENAME=$(basename "$FILEPATH" .cpp)
+DIRNAME=$(basename "$(dirname "$FILEPATH")")
+
+if [[ "$DIRNAME" != "푸는중" ]]; then
+  echo "[🚫] 이 스크립트는 '푸는중/' 폴더의 파일에서만 실행할 수 있습니다."
+  exit 1
+fi
 EXT="cpp"
 TODAY=$(date +%y-%m-%d)
 DEST_DIR="완료/$TODAY"
+MD_FILE="$DEST_DIR/${FILENAME}.md"
 
 SRC_CPP_FILE="푸는중/${FILENAME}.${EXT}"
 SRC_EXEC_FILE="푸는중/${FILENAME}"
@@ -13,6 +21,12 @@ SRC_EXEC_FILE="푸는중/${FILENAME}"
 
 # 완료 폴더 생성
 mkdir -p "$DEST_DIR"
+
+if [ -f "$MD_FILE" ]; then
+  echo "[⚠️] 이미 존재하는 마크다운 파일입니다: $MD_FILE"
+  echo "👉 덮어쓰지 않고 스크립트를 종료합니다."
+  exit 0
+fi
 
 # cpp 파일 이동
 mv "$SRC_CPP_FILE" "$DEST_DIR/"
@@ -24,7 +38,6 @@ if [ -f "$SRC_EXEC_FILE" ]; then
 fi
 
 NEW_CPP_FILE="$DEST_DIR/${FILENAME}.${EXT}"
-MD_FILE="$DEST_DIR/${FILENAME}.md"
 
 # 마크다운 생성
 cat > "$MD_FILE" <<EOF
