@@ -41,7 +41,7 @@ NEW_CPP_FILE="$DEST_DIR/${FILENAME}.${EXT}"
 
 # 마크다운 생성
 cat > "$MD_FILE" <<EOF
-# ${FILENAME}번: 세 용액
+# ${FILENAME}번: 
 
 ## 문제 요약
 ### 문제
@@ -57,10 +57,9 @@ cat > "$MD_FILE" <<EOF
 예제1
 
 입력
-5
--2 6 -97 -6 98
+
 출력
--97 -2 98
+
 \`\`\`
 
 
