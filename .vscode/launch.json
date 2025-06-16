@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "C++ 디버깅 (g++)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,  // true로 바꾸면 외부 터미널에서 실행됨
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",  // gdb 경로 (Linux 기준)
+            "setupCommands": [
+                {
+                    "description": "gdb 프리티 프린터 활성화",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "C/C++: g++ 활성 파일 빌드"
+        }
+    ]
+}
