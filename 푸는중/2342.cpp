@@ -1,11 +1,12 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#define INF 1000000000
+#define MAX 100009
 using namespace std;
 
 vector<int> a;
-pair<int,int> foot, lfoot, rfoot;
-int l, r;
+int dp[MAX][5][5];
 
 int comp(int b, int c){
     if(b == 0){
@@ -29,9 +30,6 @@ int main() {
 
     int t;
     a = vector<int>();
-    foot = pair<int,int>({0,0});
-    lfoot = pair<int,int>({0,0});
-    rfoot = pair<int,int>({0,0});
 
     while(true){
         cin >> t;
@@ -43,32 +41,35 @@ int main() {
         }
     }
 
-    for(int i : a){
-        int temp;
-        pair<int,int> tempfoot;
-        if(l+comp(lfoot.first, i) < r+comp(rfoot.first, i)){
-            temp += comp(lfoot.first, i);
-            tempfoot = lfoot;
-            tempfoot.first = i;
+    for (int i = 0; i < a.size()+3; i++) {
+        for (int j = 0; j < 5; j++) {
+            for (int k = 0; k < 5; k++) {
+                dp[i][j][k] = INF;
+            }
         }
-        else{
-            temp = r+comp(rfoot.first, i);
-            tempfoot = rfoot;
-            tempfoot.first = i;
+    }
+    dp[0][0][0] = 0;
+
+    for (int i = 0; i < a.size(); i++) {
+        for (int j = 0; j < 5; j++) {
+            for (int k = 0; k < 5; k++) {
+                if(dp[i][j][k] == INF){
+                    continue;
+                }
+                int next = a[i];
+                dp[i+1][next][k] = min(dp[i+1][next][k], dp[i][j][k]+comp(j,next));
+                dp[i+1][j][next] = min(dp[i+1][j][next], dp[i][j][k]+comp(k,next));
+            }
         }
-        if(comp(lfoot.second, i) < comp(rfoot.second, i)){
-            r = l+comp(lfoot.second, i);
-            rfoot = lfoot;
-            rfoot.second = i;
-        }
-        else{
-            r += comp(rfoot.second, i);
-            rfoot.second = i;
-        }
-        l = temp;
-        lfoot = tempfoot;
     }
 
-    cout << min(l,r);
+    int m = INF;
+    for (int j = 0; j < 5; j++) {
+        for (int k = 0; k < 5; k++) {
+            m = min(m,dp[a.size()][j][k]);
+        }
+    }
+    cout << m;
+    
     return 0;
 }
