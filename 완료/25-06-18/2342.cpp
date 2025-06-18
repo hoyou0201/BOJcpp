@@ -12,7 +12,7 @@ int comp(int b, int c){
     if(b == 0){
         return 2;
     }
-    else if(abs(b-c) == 1){
+    else if(abs(b-c) == 1 ||abs(b-c) == 3){
         return 3;
     }
     else if(b==c){
@@ -57,8 +57,13 @@ int main() {
                     continue;
                 }
                 int next = a[i];
-                dp[i+1][next][k] = min(dp[i+1][next][k], dp[i][j][k]+comp(j,next));
-                dp[i+1][j][next] = min(dp[i+1][j][next], dp[i][j][k]+comp(k,next));
+                if (next != k) {
+                    dp[i+1][next][k] = min(dp[i+1][next][k], dp[i][j][k] + comp(j, next));
+                }
+                if (next != j) {
+                    dp[i+1][j][next] = min(dp[i+1][j][next], dp[i][j][k] + comp(k, next));
+                }
+                
             }
         }
     }
