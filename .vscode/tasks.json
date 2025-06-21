@@ -38,6 +38,20 @@
             }
         },
         {
+            "label": "Generate Markdown from C++ 2",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "${workspaceFolder}/tools/generate_md_2.sh",
+                "${file}"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
             "label": "Generate C++ file for boj",
             "type": "shell",
             "command": "bash",

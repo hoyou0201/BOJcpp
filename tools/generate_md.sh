@@ -67,6 +67,9 @@ cat > "$MD_FILE" <<EOF
 ## 어려웠던 점
 
 
+## 배운 점 / 느낀 점
+
+
 ## 전체 코드
 \`\`\`cpp
 $(cat "$NEW_CPP_FILE")
