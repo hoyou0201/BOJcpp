@@ -18,13 +18,13 @@ void good(int k){
     }
 }
 
-void dp(int k, int o){
+void dfs(int k, int o){
     if(t[k] == o){
         good(k);
     }
     else if(t[k] == 0){
         t[k] = o;
-        dp(a[k], o);
+        dfs(a[k], o);
     }
     else{
         return;
@@ -45,7 +45,7 @@ int main() {
         }
         for(int i=0; i < n; i++){
             if(t[i+1] == 0)
-                dp(i+1, i+1);
+                dfs(i+1, i+1);
         }
         cout << r << '\n';
 
