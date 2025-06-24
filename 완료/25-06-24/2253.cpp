@@ -16,7 +16,6 @@ int main() {
         banned[x] = true;
     }
 
-    /* 최대 jump 길이 = ceil(sqrt(2N)) */
     int L = static_cast<int>(sqrt(2 * N)) + 2;
 
     vector<vector<int>> dist(N + 1, vector<int>(L + 1, INF));
