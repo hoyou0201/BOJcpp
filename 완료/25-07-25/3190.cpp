@@ -1,0 +1,104 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+using namespace std;
+
+struct p{
+    int y, x;
+};
+
+int n, k, l;
+vector<vector<int>> board;
+queue<p> q;
+
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    cin >> n;
+    cin >> k;
+    board = vector<vector<int>>(n, vector<int>(n, 0));
+    q = queue<p>();
+    for(int i = 0; i < k; i++){
+        p t;
+        cin >> t.y >> t.x;
+        board[t.y-1][t.x-1] = 2;
+    }
+    cin >> l;
+    int d = 0;
+    p now = {0,0};
+    q.push(now);
+    int time = 0;
+    for(int i = 0; i < l; i++){
+        int x;
+        char c;
+        cin >> x >> c;
+        x -= time;
+        for(int j = 0; j < x; j++){
+            time++;
+            if(d == 0) now.x++;
+            else if(d == 1) now.y--;
+            else if(d == 2) now.x--;
+            else if(d == 3) now.y++;
+            if(now.y < 0 || now.y >= n || now.x < 0 || now.x >= n ){
+                cout << time;
+                return 0;
+            }
+            if(board[now.y][now.x] == 0){
+                p end = q.front();
+                q.pop();
+                board[end.y][end.x] = 0;
+                board[now.y][now.x] = 1;
+                q.push(now);
+            }
+            else if(board[now.y][now.x] == 1){
+                cout << time;
+                return 0;
+            }
+            else if(board[now.y][now.x] == 2){
+                board[now.y][now.x] = 1;
+                q.push(now);
+            }
+        }
+        if(c == 'D'){
+            d--;
+        }
+        else{
+            d++;
+        }
+        d += 4;
+        d%=4;
+
+    }
+    while(true){
+        time++;
+        if(d == 0) now.x++;
+        else if(d == 1) now.y--;
+        else if(d == 2) now.x--;
+        else if(d == 3) now.y++;
+        if(now.y < 0 || now.y >= n || now.x < 0 || now.x >= n ){
+            cout << time;
+            return 0;
+        }
+        if(board[now.y][now.x] == 0){
+            p end = q.front();
+            q.pop();
+            board[end.y][end.x] = 0;
+            board[now.y][now.x] = 1;
+            q.push(now);
+        }
+        else if(board[now.y][now.x] == 1){
+            cout << time;
+            return 0;
+        }
+        else if(board[now.y][now.x] == 2){
+            board[now.y][now.x] = 1;
+            q.push(now);
+        }
+    }
+    cout << time;
+
+    return 0;
+}
