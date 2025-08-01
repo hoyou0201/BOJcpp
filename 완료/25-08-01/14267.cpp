@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int n, m;
+vector<vector<int>> company;
+vector<int> praise;
+
+void dfs(int node, int w){
+    praise[node] += w;
+    for(int i : company[node]){
+        dfs(i, praise[node]);
+    }
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    cin >> n >> m;
+    company = vector<vector<int>>(n+1, vector<int>());
+    praise = vector<int>(n+1, 0);
+    int k, kk;
+    cin >> k;
+    for(int i = 2; i <= n; i++){
+        cin >> k;
+        company[k].push_back(i);
+    }
+    for (int i = 0; i < m; i++) {
+        cin >> k >> kk;
+        praise[k] += kk;
+    }
+    dfs(1, 0);
+    for (int i = 0; i < n; i++) {
+        cout << praise[i+1] << ' ';
+    }
+    return 0;
+}
