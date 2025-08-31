@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <string>
 using namespace std;
 
 int r1, c1, r2, c2;
@@ -26,15 +27,15 @@ int main() {
                 t = g-k+j;
             }
             else if(j == -k){
-                t = g-3*k+j;
+                t = g-3*k+i;
             }
             else if(i == -k){
-                t = g-5*k+j;
+                t = g-5*k-j;
             }
             else{
-                t = g-7*k+j;
+                t = g-7*k-i;
             }
-            mj = max(mj, t%10);
+            mj = max(mj, (int)to_string(t).size());
             mmm[ii].push_back(t);
         }
         ii++;
@@ -42,11 +43,11 @@ int main() {
 
     for(auto i : mmm){
         for(int j : i){
-            int s = j%10;
+            int s = to_string(j).size();
             for(int k = s; k < mj; k++){
                 cout << ' ';
             }
-            cout << j;
+            cout << j << ' ';
         }
         cout << '\n';
     }
