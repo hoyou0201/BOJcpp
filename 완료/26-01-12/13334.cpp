@@ -9,6 +9,7 @@ using namespace std;
 
 int n, h, o, d, result;
 priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> lines;
+priority_queue<int, vector<int>, greater<int>> q;
 
 int main() {
     ios::sync_with_stdio(false);
@@ -17,8 +18,8 @@ int main() {
     cin >> n;
     for (int i = 0; i < n; i++) {
         cin >> h >> o;
-        if(h > o) lines.push({o, h});
-        else lines.push({h, o});
+        if(h > o) lines.push({h, o});
+        else lines.push({o, h});
     }
 
     cin >> d;
@@ -26,21 +27,12 @@ int main() {
     while(!lines.empty()){
         pair<int, int> a = lines.top();
         lines.pop();
-        if(a.second - a.first > d) continue;
-        int m = 1;
-        stack<pair<int,int>> temp;      
-        while(!lines.empty() && lines.top().first <= a.first+d){
-            if(lines.top().second <= a.first+d){
-                m++;
-            }
-            temp.push(lines.top());
-            lines.pop();
+        if(a.first - a.second > d) continue;
+        q.push(a.second);
+        while(!q.empty() && q.top() < a.first-d){
+            q.pop();
         }
-        result = max(result, m);
-        while(!temp.empty()){
-            lines.push(temp.top());
-            temp.pop();
-        }
+        result = max((int)q.size(), result);
     }
     cout << result;
 
