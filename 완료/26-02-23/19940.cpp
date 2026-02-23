@@ -20,34 +20,35 @@ int main() {
     best = vector<vector<int>>(61);
     visit = vector<bool>(61);
 
-    q.emplace(1, 0,0,0,1,0);
-    q.emplace(10, 0,1,0,0,0);
-    q.emplace(60, 1,0,0,0,0);
-
+    q.emplace(1, vector<int>{0,0,0,1,0});
+    q.emplace(10, vector<int>{0,1,0,0,0});
+    q.emplace(60, vector<int>{1,0,0,0,0});
+    best[0] = {0,0,0,0,0};
     while(!q.empty()){
         auto [a, v] = q.front();
+        q.pop();
         if(!visit[a]){
             visit[a] = true;
             best[a] = v;
             if(a-1 > 0){
-                v[4]+1;
+                v[4]+=1;
                 q.emplace(a-1, v);
-                v[4]-1;
+                v[4]-=1;
             }
             if(a+1 < 61){
-                v[3]+1;
-                q.emplace(a-1, v);
-                v[3]-1;
+                v[3]+=1;
+                q.emplace(a+1, v);
+                v[3]-=1;
             }
             if(a-10 > 0){
-                v[2]+1;
+                v[2]+=1;
                 q.emplace(a-10, v);
-                v[2]-1;
+                v[2]-=1;
             }
             if(a+10 < 61){
-                v[1]+1;
+                v[1]+=1;
                 q.emplace(a+10, v);
-                v[1]-1;
+                v[1]-=1;
             }
         }
     }
@@ -57,10 +58,15 @@ int main() {
     for(int _ = 0; _ < T; _++){
         cin >> n;
 
-        timer = vector<int>(5, 0);
 
-        timer[0] = n / 60;
+        int gh = n / 60;
         n %= 60;
+
+        cout << best[n][0]+gh << ' ';
+        for(int i = 1; i < 5; i++){
+            cout << best[n][i] << ' ';
+        }
+        cout << '\n';
 
 
 
